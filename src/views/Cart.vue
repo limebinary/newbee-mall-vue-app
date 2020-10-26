@@ -16,7 +16,7 @@
         <van-swipe-cell :right-width="50" v-for="(item, index) in list" :key="index">
           <div class="good-item">
             <van-checkbox :name="item.cartItemId" />
-            <div class="good-img"><img :src="`//api.newbee.ltd${item.goodsCoverImg}`" alt=""></div>
+            <div class="good-img"><img :src="prefix(item.goodsCoverImg)" alt=""></div>
             <div class="good-desc">
               <div class="good-title">
                 <span>{{ item.goodsName }}</span>
@@ -126,6 +126,10 @@ export default {
       Toast.clear();
     },
     async onSubmit() {
+      if (this.result.length == 0) {
+        Toast.fail('请选择商品进行结算')
+        return
+      }
       const params = JSON.stringify(this.result)
       // for(let i = 0; i < this.result.length; i++) {
       //   await deleteCartItem(this.result[i])

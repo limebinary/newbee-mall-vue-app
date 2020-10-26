@@ -6,11 +6,11 @@
  * Copyright (c) 2020 陈尼克 all rights reserved.
  * 版权所有，侵权必究！
  */
-
 import axios from 'axios'
 import { Toast } from 'vant'
+import router from '../router'
 
-axios.defaults.baseURL = process.env.NODE_ENV == 'development' ? '//localhost:28019' : 'localhost:28019'
+axios.defaults.baseURL = process.env.NODE_ENV == 'development' ? '//47.99.134.126:28019/api/v1' : '//47.99.134.126:28019/api/v1'
 axios.defaults.withCredentials = true
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers['token'] = localStorage.getItem('token') || ''
@@ -24,7 +24,7 @@ axios.interceptors.response.use(res => {
   if (res.data.resultCode != 200) {
     if (res.data.message) Toast.fail(res.data.message)
     if (res.data.resultCode == 416) {
-      window.vRouter.push({ path: '/login' })
+      router.push({ path: '/login' })
     }
     return Promise.reject(res.data)
   }
